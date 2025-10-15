@@ -1,0 +1,10 @@
+# Python bytecode
+__pycache__/
+*.pyc
+
+# JetBrains IDE files
+.idea/
+
+# Virtual environments
+venv/
+env/

@@ -1,0 +1,11 @@
+sites:
+  - site_id: SITE-001
+    panel_count: 20
+    inverter_count: 2
+    battery_count: 1
+    capacity_kw: 10
+  - site_id: SITE-002
+    panel_count: 15
+    inverter_count: 1
+    battery_count: 1
+    capacity_kw: 8

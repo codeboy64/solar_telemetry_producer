@@ -1,16 +1,16 @@
 import json
-import time, random, datetime
-from kafka import KafkaProducer
+import time
+from datetime import datetime
 from utils.helpers import now_iso, solar_irradiance, panel_dc_power
 from utils.kafka_client import create_producer
 
 producer = create_producer()
 
-def run(site, site_state):
+def run(site, site_state, telemetry_interval):
     site_id = site["site_id"]
     panel_count = site["panel_count"]
     while True:
-        hour = datetime.datetime.utcnow().hour + datetime.datetime.utcnow().minute/60
+        hour = datetime.utcnow().hour + datetime.utcnow().minute/60
         irr = solar_irradiance(hour)
         dc_per_panel = panel_dc_power(irr)
         total_dc = dc_per_panel * panel_count
@@ -28,4 +28,4 @@ def run(site, site_state):
         msg_bytes = json.dumps(msg).encode('utf-8')
 
         producer.send("telemetry.panel", key=site_id.encode(), value=msg_bytes)
-        time.sleep(2)
+        time.sleep(telemetry_interval)

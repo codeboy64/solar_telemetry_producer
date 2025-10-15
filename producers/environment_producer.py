@@ -1,12 +1,11 @@
 import json
 import random, time
-from kafka import KafkaProducer
 from utils.helpers import now_iso
 from utils.kafka_client import create_producer
 
 producer = create_producer()
 
-def run(site):
+def run(site, telemetry_interval):
     site_id = site["site_id"]
     while True:
         msg = {
@@ -20,4 +19,4 @@ def run(site):
         msg_bytes = json.dumps(msg).encode('utf-8')
 
         producer.send("telemetry.environment", key=site_id.encode(), value=msg_bytes)
-        time.sleep(15)
+        time.sleep(telemetry_interval)

@@ -8,6 +8,7 @@ from utils.create_topics import ensure_topics, wait_for_kafka
 with open("config/sites.yaml") as f:
     config = yaml.safe_load(f)
 sites = config["sites"]
+telemetry_interval = config.get("telemetry_interval_sec", 60)
 
 # Shared state for correlation
 site_state = {site["site_id"]: {"battery_soc":50.0, "panel_power":0.0, "inverter_power":0.0} for site in sites}
@@ -17,10 +18,10 @@ ensure_topics()
 
 # Start producers
 for site in sites:
-    threading.Thread(target=panel_producer.run, args=(site, site_state), daemon=True).start()
-    threading.Thread(target=inverter_producer.run, args=(site, site_state), daemon=True).start()
-    threading.Thread(target=battery_producer.run, args=(site, site_state), daemon=True).start()
-    threading.Thread(target=environment_producer.run, args=(site,), daemon=True).start()
+    threading.Thread(target=panel_producer.run, args=(site, site_state, telemetry_interval), daemon=True).start()
+    threading.Thread(target=inverter_producer.run, args=(site, site_state, telemetry_interval), daemon=True).start()
+    threading.Thread(target=battery_producer.run, args=(site, site_state, telemetry_interval), daemon=True).start()
+    threading.Thread(target=environment_producer.run, args=(site, telemetry_interval), daemon=True).start()
 
 print("🚀 Correlated telemetry producers running...")
 while True:

@@ -1,12 +1,11 @@
 import json
 import time
-from kafka import KafkaProducer
 from utils.helpers import now_iso, inverter_ac_power
 from utils.kafka_client import create_producer
 
 producer = create_producer()
 
-def run(site, site_state):
+def run(site, site_state, telemetry_interval):
     site_id = site["site_id"]
     while True:
         dc_power = site_state[site_id]["panel_power"]
@@ -22,4 +21,4 @@ def run(site, site_state):
         msg_bytes = json.dumps(msg).encode('utf-8')
 
         producer.send("telemetry.inverter", key=site_id.encode(), value=msg_bytes)
-        time.sleep(5)
+        time.sleep(telemetry_interval)

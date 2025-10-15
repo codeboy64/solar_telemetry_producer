@@ -21,7 +21,7 @@ def inverter_ac_power(total_dc_power):
     eff = random.uniform(0.97, 0.985)
     return total_dc_power * eff / 1000 # kw
 
-def battery_update(soc, ac_power_kw, site_load_kw, battery_capacity_kwh, interval_hr=1/12):
+def battery_update(soc, ac_power_kw, site_load_kw, battery_capacity_kwh, interval_hr):
     """Update battery SOC based on net power"""
     if battery_capacity_kwh <= 0:
         raise ValueError("Battery capacity must be > 0")

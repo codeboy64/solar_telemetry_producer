@@ -1,3 +1,5 @@
+telemetry_interval_sec: 60
+
 sites:
   - site_id: SITE-001
     panel_count: 20

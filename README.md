@@ -34,12 +34,9 @@ At night (e.g. before 6 AM or after 6 PM), panel and inverter power drop to 0 �
 
 ## ⚙️ Configuration
 
-### `config/sites.yaml`
-
-Defines your simulated sites:
+`config/sites.yaml` defines your simulated sites:
 ```yaml
 telemetry_interval_sec: 60 # seconds
-
 sites:
   - site_id: SITE-001
     panel_count: 20
@@ -68,10 +65,9 @@ Build & start Kafka + simulator with Docker Compose
 `docker-compose up -d`
 
 You should see:
+- ✅ Connected to Kafka broker
+- 🚀 Correlated telemetry producers running...
 
-`✅ Connected to Kafka broker`
-
-`🚀 Correlated telemetry producers running...`
 ---
 ## 📊 Viewing Messages
 
